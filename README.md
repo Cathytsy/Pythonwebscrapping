@@ -84,11 +84,60 @@ for i in soup.find_all('a', href=True):
     if 'news/canada/montreal' in i['href']:
         print('Montreal'+':'+'https://www.cbc.ca/'+i['href'])
 ```
+Detailed code and result can be referred to Python_Assignment2_Part1
+
+## Second part - topic count - thanks to Will's code
+
+Creating a function 
+```
+def topic_detection(sentence):
+    Israel_Keywords =('Israel','Jewish','Jews')
+    Palestine_Keywords =('Gaza','Palestine','Rafah','Muslim','Palestinian')
+    Hamas_Keywords= ('Hamas')
+    Israel = any(sentence.count(i)>0 for i in Israel_Keywords)
+    Palestine = any(sentence.count(i)>0 for i in Palestine_Keywords)
+    Hamas = any(sentence.count(i)>0 for i in Hamas_Keywords)
+    topics = []
+    if Israel == True:
+        topics.append("Israel")
+    if Palestine == True:
+        topics.append("Palestine")
+    if Hamas == True:
+        topics.append('Hamas')
+    return topics
+```
+Creating a dictionary
+```
+p_dictionary = {}
+p_list = []
+topic_list = []
+for i in range(0, len(paragraphs)):
+    if len(paragraphs[i].text) > 50:
+      p_list.append(paragraphs[i].text)
+      topic_list.append(topic_detection(paragraphs[i].text))
+p_dictionary['Paragraphs'] = p_list
+p_dictionary['Topics'] = topic_list
+```
+
+Separating the category and prepare for the bar chat
+```
+df['Israel'] = df['Topics'].apply(lambda x:1 if 'Israel' in x else 0
+df['Palestine'] = df['Topics'].apply(lambda x:1 if 'Palestine' in x else 0)
+df['Hamas'] = df['Topics'].apply(lambda x:1 if 'Hamas' in x else 0)
+```
+![image](https://github.com/Cathytsy/Pythonwebscrapping/assets/147212218/1461ee9a-b501-480c-bbcf-0867c9a8a5b6)
+
+Setting y-axis and x-axis for the bar chat with the code below
+```
+topic_counts = [df['Palestine'].sum(), df['Israel'].sum(),df['Hamas'].sum()]
+topic_labels = ['Palestine', 'Israel', 'Hamas']
+```
+### Result 
+![image](https://github.com/Cathytsy/Pythonwebscrapping/assets/147212218/81ede47d-f726-4668-8b24-75c9b36db066)
+
+An interesting finding is that Hamas - when putting only one keyword in that category - still result in the highest count. It seems like Hamas is a must put word when reporting about the war between Hamas and Israel. 
 
 
-
-###Improvement
+### Improvement
 To get a comprehensive search on keywods, we should include news that are not on the main page. Challenges come when there is no available element to select on the load more button. Perhaps Selenium could help with this situstion by acting as a human to click on thr load more button.
 
-
-so getting the ntitle and only for toronto can be a good filter
