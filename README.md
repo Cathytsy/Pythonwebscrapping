@@ -27,7 +27,8 @@ As all the news head  title is stored uner 'h3.headline' it would be our selecto
 news_titles = soup.select('h3.headline')
 ```
 Using for loop to get all the titles on top page
-```for news_title in news_titles:
+```
+for news_title in news_titles:
     print(news_title.text)
 ```
 Then use pandas library to make a table
