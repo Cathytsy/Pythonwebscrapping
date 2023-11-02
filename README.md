@@ -72,6 +72,19 @@ https://www.cbc.ca//news/canada/manitoba/grassroots-grannies-winnipeg-rap-song-1
 https://www.cbc.ca//news/canada/british-columbia/b-c-therapists-lawsuit-mdma-trial-1.7010981
 https://www.cbc.ca//news/canada/manitoba/silver-cross-mother-gloria-hooper-christopher-holopina-manitoba-1.7012544
 ```
+By scrapping the html we see certain pattern on the html and this can make use as a filter with the code below
+```
+for i in soup.find_all('a', href=True):
+    if 'news/canada/toronto' in i['href']:
+        print('Toronto'+':'+'https://www.cbc.ca/'+i['href'])
+    if 'news/canada/calgary' in i['href']:
+        print('Calgary'+':'+'https://www.cbc.ca/'+i['href'])
+    if 'news/canada/hamilton' in i['href']:
+        print('Hamilton'+':'+'https://www.cbc.ca/'+i['href'])
+    if 'news/canada/montreal' in i['href']:
+        print('Montreal'+':'+'https://www.cbc.ca/'+i['href'])
+```
+
 
 
 ###Improvement
